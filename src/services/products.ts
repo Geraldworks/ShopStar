@@ -1,5 +1,5 @@
 import axios from "axios";
-const baseUrl = import.meta.env.VITE_BACKEND_URL + "/listings";
+const baseUrl = import.meta.env.VITE_BACKEND_URL + "/products";
 
 import { Product } from "@/types/product";
 

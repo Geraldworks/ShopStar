@@ -22,3 +22,5 @@ export const SignUpSchema = z
   });
 
 export type TSignUpSchema = z.infer<typeof SignUpSchema>;
+
+export type NonSensitiveUser = Omit<TSignUpSchema, "password" | "confirmPassword">;

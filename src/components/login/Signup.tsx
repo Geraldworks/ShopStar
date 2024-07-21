@@ -6,17 +6,24 @@ import {
   FormLabel,
   FormMessage
 } from "@/components/ui/form";
+import { Dialog, DialogContent, DialogDescription, DialogTitle } from "@/components/ui/dialog";
 import { SignUpSchema, TSignUpSchema } from "@/types/login";
+import { useCustomError } from "../hooks/customErrorHooks";
 import { LoadingSpinner } from "@/components/ui/loader";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router-dom";
 import { Input } from "@/components/ui/input";
+import userService from "../../services/user";
+import { DialogHeader } from "../ui/dialog";
 import { useForm } from "react-hook-form";
+import ErrorDiv from "../ErrorDiv";
 import { useState } from "react";
 
 const Signup = () => {
+  const [showDialog, setShowDialog] = useState(false);
   const [submitted, setSubmitted] = useState(false);
+  const [error, setError] = useCustomError();
   const navigate = useNavigate();
   const form = useForm<TSignUpSchema>({
     resolver: zodResolver(SignUpSchema),
@@ -30,23 +37,36 @@ const Signup = () => {
     }
   });
 
-  const onSubmit = (formFields: TSignUpSchema) => {
-    setSubmitted(true);
-
-    // perform async account creation
-
-    // if success
-    form.reset();
-    // set localStorage
-    // navigate("/products");
-
-    // if fail
-    // form set error
-    console.log(formFields);
+  const onSubmit = async (formFields: TSignUpSchema) => {
+    try {
+      setSubmitted(true);
+      const userFromDb = await userService.createUser(formFields);
+      // use this for something
+      console.log(userFromDb);
+      form.reset();
+      setShowDialog(true);
+      setTimeout(() => {
+        setSubmitted(false);
+        navigate("/signin");
+      }, 2500);
+    } catch (err: unknown) {
+      if (err instanceof Error) {
+        setSubmitted(false);
+        setError(err.message);
+      }
+    }
   };
 
   return (
     <div className="min-w-[300px] w-[50vw] max-w-[750px]">
+      <Dialog open={showDialog}>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>Your account has been created!</DialogTitle>
+            <DialogDescription>Redirecting you to the sign in page soon</DialogDescription>
+          </DialogHeader>
+        </DialogContent>
+      </Dialog>
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)}>
           <div className="flex flex-col space-y-4">
@@ -136,10 +156,11 @@ const Signup = () => {
               )}
             />
           </div>
+          <ErrorDiv error={error} />
           <Button
             disabled={submitted}
             type="submit"
-            className="min-w-[300px] w-[50vw] max-w-[750px] mt-8"
+            className="min-w-[300px] w-[50vw] max-w-[750px] mt-6"
           >
             {!submitted ? "Submit" : <LoadingSpinner />}
           </Button>
