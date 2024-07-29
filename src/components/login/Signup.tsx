@@ -1,20 +1,13 @@
-import {
-  Form,
-  FormField,
-  FormControl,
-  FormItem,
-  FormLabel,
-  FormMessage
-} from "@/components/ui/form";
 import { Dialog, DialogContent, DialogDescription, DialogTitle } from "@/components/ui/dialog";
 import { SignUpSchema, TSignUpSchema } from "@/types/login";
-import { useCustomError } from "../hooks/customErrorHooks";
+import FormFieldWrapper from "../forms/FormFieldWrapper";
 import { LoadingSpinner } from "@/components/ui/loader";
 import { zodResolver } from "@hookform/resolvers/zod";
+import useTimedNotif from "../hooks/useTimedNotif";
 import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router-dom";
-import { Input } from "@/components/ui/input";
 import userService from "../../services/user";
+import { Form } from "@/components/ui/form";
 import { DialogHeader } from "../ui/dialog";
 import { useForm } from "react-hook-form";
 import ErrorDiv from "../ErrorDiv";
@@ -23,8 +16,10 @@ import { useState } from "react";
 const Signup = () => {
   const [showDialog, setShowDialog] = useState(false);
   const [submitted, setSubmitted] = useState(false);
-  const [error, setError] = useCustomError();
+  const [error, setError] = useTimedNotif();
+
   const navigate = useNavigate();
+
   const form = useForm<TSignUpSchema>({
     resolver: zodResolver(SignUpSchema),
     defaultValues: {
@@ -40,9 +35,7 @@ const Signup = () => {
   const onSubmit = async (formFields: TSignUpSchema) => {
     try {
       setSubmitted(true);
-      const userFromDb = await userService.createUser(formFields);
-      // use this for something
-      console.log(userFromDb);
+      await userService.createUser(formFields);
       form.reset();
       setShowDialog(true);
       setTimeout(() => {
@@ -51,10 +44,10 @@ const Signup = () => {
       }, 2500);
     } catch (err: unknown) {
       if (err instanceof Error) {
-        setSubmitted(false);
         setError(err.message);
       }
     }
+    setSubmitted(false);
   };
 
   return (
@@ -72,88 +65,41 @@ const Signup = () => {
           <div className="flex flex-col space-y-4">
             <div className="flex justify-between">
               <div className="w-1/2">
-                <FormField
-                  control={form.control}
+                <FormFieldWrapper
+                  form={form}
                   name="firstName"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>First Name</FormLabel>
-                      <FormControl>
-                        <Input placeholder="First Name" {...field} />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
+                  formLabel="First Name"
+                  placeholder="First Name"
                 />
               </div>
               <div className="w-1.5"></div>
               <div className="w-1/2">
-                <FormField
-                  control={form.control}
+                <FormFieldWrapper
+                  form={form}
                   name="lastName"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Last Name</FormLabel>
-                      <FormControl>
-                        <Input placeholder="Last Name" {...field} />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
+                  formLabel="Last Name"
+                  placeholder="Last Name"
                 />
               </div>
             </div>
-            <FormField
-              control={form.control}
+            <FormFieldWrapper
+              form={form}
               name="username"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Username</FormLabel>
-                  <FormControl>
-                    <Input placeholder="Username" {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
+              formLabel="Username"
+              placeholder="Username"
             />
-            <FormField
-              control={form.control}
-              name="email"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Email</FormLabel>
-                  <FormControl>
-                    <Input type="email" placeholder="Email" {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
+            <FormFieldWrapper form={form} name="email" formLabel="Email" placeholder="Email" />
+            <FormFieldWrapper
+              form={form}
               name="password"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Password</FormLabel>
-                  <FormControl>
-                    <Input type="password" placeholder="Password" {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
+              formLabel="Password"
+              placeholder="Password"
             />
-            <FormField
-              control={form.control}
+            <FormFieldWrapper
+              form={form}
               name="confirmPassword"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Confirm Password</FormLabel>
-                  <FormControl>
-                    <Input type="password" placeholder="Confirm Password" {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
+              formLabel="Confirm Password"
+              placeholder="Confirm Password"
             />
           </div>
           <ErrorDiv error={error} />

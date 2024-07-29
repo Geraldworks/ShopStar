@@ -1,27 +1,22 @@
-import {
-  Form,
-  FormField,
-  FormControl,
-  FormItem,
-  FormLabel,
-  FormMessage
-} from "@/components/ui/form";
 import { SignInSchema, TSignInSchema } from "@/types/login";
-import { useCustomError } from "../hooks/customErrorHooks";
-import { LoadingSpinner } from "@/components/ui/loader";
+import FormFieldWrapper from "../forms/FormFieldWrapper";
 import { zodResolver } from "@hookform/resolvers/zod";
+import useTimedNotif from "../hooks/useTimedNotif";
 import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router-dom";
-import { Input } from "@/components/ui/input";
+import { Form } from "@/components/ui/form";
 import loginService from "@/services/login";
 import { useForm } from "react-hook-form";
+import MiniLoader from "../MiniLoader";
 import ErrorDiv from "../ErrorDiv";
 import { useState } from "react";
 
 const Signin = () => {
   const [submitted, setSubmitted] = useState(false);
-  const [error, setError] = useCustomError();
+  const [error, setError] = useTimedNotif();
+
   const navigate = useNavigate();
+
   const form = useForm<TSignInSchema>({
     resolver: zodResolver(SignInSchema),
     defaultValues: {
@@ -29,9 +24,10 @@ const Signin = () => {
       password: ""
     }
   });
+
   const onSubmit = async (formFields: TSignInSchema) => {
-    setSubmitted(true);
     try {
+      setSubmitted(true);
       const result = await loginService.login(formFields);
       form.reset();
       window.localStorage.setItem("shopstar-token", result);
@@ -41,39 +37,25 @@ const Signin = () => {
         setError(err.message);
       }
     }
-
     setSubmitted(false);
   };
+
   return (
     <div className="min-w-[300px] w-[50vw] max-w-[750px]">
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)}>
           <div className="flex flex-col space-y-4">
-            <FormField
-              control={form.control}
+            <FormFieldWrapper
+              form={form}
               name="username"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Username</FormLabel>
-                  <FormControl>
-                    <Input placeholder="Username" {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
+              formLabel="Username"
+              placeholder="Username"
             />
-            <FormField
-              control={form.control}
+            <FormFieldWrapper
+              form={form}
               name="password"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Password</FormLabel>
-                  <FormControl>
-                    <Input type="password" placeholder="Password" {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
+              formLabel="Password"
+              placeholder="Username"
             />
           </div>
           <ErrorDiv error={error} />
@@ -82,7 +64,7 @@ const Signin = () => {
             type="submit"
             className="min-w-[300px] w-[50vw] max-w-[750px] mt-6"
           >
-            {!submitted ? "Submit" : <LoadingSpinner />}
+            <MiniLoader displayText="Submit" isLoading={submitted} />
           </Button>
         </form>
       </Form>

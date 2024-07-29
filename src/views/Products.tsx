@@ -3,6 +3,7 @@ import productService from "@/services/products";
 import { useState, useEffect } from "react";
 import { Product } from "@/types/product";
 import Loader from "@/components/Loader";
+
 /*
 TODO 
 
@@ -12,12 +13,11 @@ TODO
 */
 // change state management to react query
 
-const Home = () => {
+const Products = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [products, setProducts] = useState<Product[]>([]);
   useEffect(() => {
     const getProducts = async () => {
-      setIsLoading(true);
       const data = await productService.getAll();
       setProducts(data);
       setIsLoading(false);
@@ -37,4 +37,4 @@ const Home = () => {
   );
 };
 
-export default Home;
+export default Products;
