@@ -16,4 +16,14 @@ const getAll = async (filters: listingFilters) => {
   return data;
 };
 
-export default { getAll };
+const createOne = async (listingPayload: Omit<Listing, "id">) => {
+  const token = window.localStorage.getItem("shopstar-token");
+  const { data } = await axios.post<Listing>(
+    baseUrl,
+    { data: listingPayload },
+    { headers: { Authorization: `Bearer ${token}` } }
+  );
+  return data;
+};
+
+export default { getAll, createOne };

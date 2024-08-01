@@ -1,10 +1,10 @@
+import CreateListing from "../listings/CreateListing";
 import ListingCards from "../listings/ListingCards";
 import { NonSensitiveUser } from "../../types/auth";
 import listingService from "@/services/listings";
 import authService from "../../services/user";
 import { useEffect, useState } from "react";
 import { Listing } from "@/types/listing";
-import { Button } from "../ui/button";
 
 const Profile = () => {
   const [userInfo, setUserInfo] = useState<NonSensitiveUser>();
@@ -24,7 +24,8 @@ const Profile = () => {
     <div>
       <div className="text-xl">
         <div className="flex justify-around items-center mt-4">
-          Welcome, {userInfo?.firstName}!<Button variant="outline">Create Listing</Button>
+          Welcome, {userInfo?.firstName}!
+          <CreateListing addListing={(listing) => setUserListings([...userListings, listing])} />
         </div>
         <ListingCards listings={userListings} route="/profile/listings" />
       </div>
