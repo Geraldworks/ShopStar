@@ -1,5 +1,5 @@
-import { NonSensitiveUser } from "@/types/login";
-import { TSignUpSchema } from "@/types/login";
+import { NonSensitiveUser } from "@/types/auth";
+import { TSignUpSchema } from "@/types/auth";
 import axios, { isAxiosError } from "axios";
 
 const baseUrl = import.meta.env.VITE_BACKEND_URL + "/users";
@@ -17,4 +17,20 @@ const createUser = async (userPayload: TSignUpSchema) => {
   }
 };
 
-export default { createUser };
+const getUser = async () => {
+  try {
+    const token = window.localStorage.getItem("shopstar-token");
+    const loggedInUserPayload = await axios.get<NonSensitiveUser>(baseUrl, {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    });
+    return loggedInUserPayload.data;
+  } catch (err: unknown) {
+    if (err instanceof Error) {
+      console.log(err.message);
+    }
+  }
+};
+
+export default { createUser, getUser };

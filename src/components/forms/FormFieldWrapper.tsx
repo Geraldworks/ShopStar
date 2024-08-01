@@ -7,10 +7,11 @@ interface FormFieldWrapper<T extends FieldValues> {
   name: Path<T>;
   formLabel: string;
   placeholder: string;
+  type?: string;
 }
 
 const FormFieldWrapper = <T extends FieldValues>(props: FormFieldWrapper<T>) => {
-  const { form, name, formLabel, placeholder } = props;
+  const { form, name, formLabel, placeholder, type } = props;
   return (
     <FormField
       control={form.control}
@@ -19,7 +20,7 @@ const FormFieldWrapper = <T extends FieldValues>(props: FormFieldWrapper<T>) => 
         <FormItem>
           <FormLabel>{formLabel}</FormLabel>
           <FormControl>
-            <Input placeholder={placeholder} {...field} />
+            <Input type={type || ""} placeholder={placeholder} {...field} />
           </FormControl>
           <FormMessage />
         </FormItem>

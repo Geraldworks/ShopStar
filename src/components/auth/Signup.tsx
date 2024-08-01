@@ -1,15 +1,15 @@
 import { Dialog, DialogContent, DialogDescription, DialogTitle } from "@/components/ui/dialog";
-import { SignUpSchema, TSignUpSchema } from "@/types/login";
+import { SignUpSchema, TSignUpSchema } from "@/types/auth";
 import FormFieldWrapper from "../forms/FormFieldWrapper";
-import { LoadingSpinner } from "@/components/ui/loader";
 import { zodResolver } from "@hookform/resolvers/zod";
 import useTimedNotif from "../hooks/useTimedNotif";
 import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router-dom";
-import userService from "../../services/user";
+import authService from "../../services/user";
 import { Form } from "@/components/ui/form";
 import { DialogHeader } from "../ui/dialog";
 import { useForm } from "react-hook-form";
+import MiniLoader from "../MiniLoader";
 import ErrorDiv from "../ErrorDiv";
 import { useState } from "react";
 
@@ -35,7 +35,7 @@ const Signup = () => {
   const onSubmit = async (formFields: TSignUpSchema) => {
     try {
       setSubmitted(true);
-      await userService.createUser(formFields);
+      await authService.createUser(formFields);
       form.reset();
       setShowDialog(true);
       setTimeout(() => {
@@ -108,7 +108,7 @@ const Signup = () => {
             type="submit"
             className="min-w-[300px] w-[50vw] max-w-[750px] mt-6"
           >
-            {!submitted ? "Submit" : <LoadingSpinner />}
+            <MiniLoader displayText="Submit" isLoading={submitted} />
           </Button>
         </form>
       </Form>

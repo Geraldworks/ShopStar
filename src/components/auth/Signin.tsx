@@ -1,4 +1,4 @@
-import { SignInSchema, TSignInSchema } from "@/types/login";
+import { SignInSchema, TSignInSchema } from "@/types/auth";
 import FormFieldWrapper from "../forms/FormFieldWrapper";
 import { zodResolver } from "@hookform/resolvers/zod";
 import useTimedNotif from "../hooks/useTimedNotif";
@@ -31,7 +31,7 @@ const Signin = () => {
       const result = await loginService.login(formFields);
       form.reset();
       window.localStorage.setItem("shopstar-token", result);
-      navigate("/products");
+      navigate("/listings");
     } catch (err: unknown) {
       if (err instanceof Error) {
         setError(err.message);
@@ -55,7 +55,8 @@ const Signin = () => {
               form={form}
               name="password"
               formLabel="Password"
-              placeholder="Username"
+              placeholder="Password"
+              type="password"
             />
           </div>
           <ErrorDiv error={error} />

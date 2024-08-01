@@ -1,4 +1,4 @@
-import { TSignInSchema } from "@/types/login";
+import { TSignInSchema } from "@/types/auth";
 import axios, { isAxiosError } from "axios";
 const baseUrl = import.meta.env.VITE_BACKEND_URL + "/login";
 
@@ -19,4 +19,22 @@ const login = async (userPayload: TSignInSchema) => {
   }
 };
 
-export default { login };
+const jwtAuth = async (token: string) => {
+  try {
+    await axios.post(
+      `${baseUrl}/jwt`,
+      {},
+      {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      }
+    );
+  } catch (err: unknown) {
+    if (isAxiosError(err)) {
+      throw new Error(err.response?.data.message);
+    }
+  }
+};
+
+export default { login, jwtAuth };

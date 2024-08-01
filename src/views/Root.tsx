@@ -1,4 +1,5 @@
 import { buttonVariants } from "@/components/ui/button";
+import BrandLabel from "@/components/BrandLabel";
 import { Link } from "react-router-dom";
 
 /*
@@ -14,14 +15,17 @@ const Root = () => {
   //   };
   return (
     <div>
-      <div>this is the root page</div>
-      <div>
-        <Link className={buttonVariants({ variant: "outline" })} to="/products">
-          Check Out
-        </Link>
-        <Link className={buttonVariants({ variant: "outline" })} to="/signin">
-          Sign in
-        </Link>
+      <BrandLabel />
+      <div className="flex flex-col items-center space-y-5 mt-5">
+        <div className="text-xl">Welcome to ShopStar!</div>
+        <div>
+          <Link className={buttonVariants({ variant: "outline" })} to="/listings">
+            View Listings
+          </Link>
+          <Link className={buttonVariants({ variant: "outline" })} to="/signin">
+            Sign in
+          </Link>
+        </div>
       </div>
     </div>
   );

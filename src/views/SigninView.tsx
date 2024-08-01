@@ -13,11 +13,16 @@ Half of the page will be the design
 Half of the other page will be the content
 */
 
-import Signin from "@/components/login/Signin";
+import useAuth from "@/components/hooks/useAuth";
+import Signin from "@/components/auth/Signin";
+import { Navigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 
 const SigninView = () => {
-  return (
+  const { isAuthenticated } = useAuth();
+  return isAuthenticated ? (
+    <Navigate to="/listings" />
+  ) : (
     <div className="flex flex-col justify-center items-center h-screen space-y-4">
       <div className="text-2xl font-bold">Sign In</div>
       <div>
