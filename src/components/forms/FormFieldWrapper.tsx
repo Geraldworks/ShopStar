@@ -6,7 +6,7 @@ interface FormFieldWrapper<T extends FieldValues> {
   form: UseFormReturn<T>;
   name: Path<T>;
   formLabel: string;
-  placeholder: string;
+  placeholder?: string;
   type?: string;
 }
 

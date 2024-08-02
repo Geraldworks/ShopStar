@@ -31,9 +31,19 @@ const createOne = async (listingPayload: Omit<Listing, "id">) => {
   return data;
 };
 
+const updateOne = async (listingPayload: Omit<Listing, "id" | "createdAt">, listingId: number) => {
+  const token = window.localStorage.getItem("shopstar-token");
+  const { data } = await axios.put<ListingWithUsername>(
+    `${baseUrl}/${listingId}`,
+    { data: listingPayload },
+    { headers: { Authorization: `Bearer ${token}` } }
+  );
+  return data;
+};
+
 const deleteOne = async (listingId: number) => {
   const token = window.localStorage.getItem("shopstar-token");
   await axios.delete(`${baseUrl}/${listingId}`, { headers: { Authorization: `Bearer ${token}` } });
 };
 
-export default { getOne, getAll, createOne, deleteOne };
+export default { getOne, getAll, createOne, updateOne, deleteOne };
