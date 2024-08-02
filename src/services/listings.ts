@@ -31,4 +31,9 @@ const createOne = async (listingPayload: Omit<Listing, "id">) => {
   return data;
 };
 
-export default { getOne, getAll, createOne };
+const deleteOne = async (listingId: number) => {
+  const token = window.localStorage.getItem("shopstar-token");
+  await axios.delete(`${baseUrl}/${listingId}`, { headers: { Authorization: `Bearer ${token}` } });
+};
+
+export default { getOne, getAll, createOne, deleteOne };

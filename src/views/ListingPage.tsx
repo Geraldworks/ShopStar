@@ -1,10 +1,10 @@
+import DetailedListing from "../components/listings/DetailedListing";
 import { useParams, useNavigate } from "react-router-dom";
 import { ListingWithUsername } from "@/types/listing";
 import listingService from "@/services/listings";
-import DetailedListing from "./DetailedListing";
 import { useState, useEffect } from "react";
+import Theme from "../components/Theme";
 import { isAxiosError } from "axios";
-import Theme from "../Theme";
 
 const ListingPage = () => {
   const [listing, setListing] = useState<ListingWithUsername>({} as ListingWithUsername);
