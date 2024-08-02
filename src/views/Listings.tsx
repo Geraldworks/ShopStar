@@ -1,11 +1,11 @@
 import ListingCards from "@/components/listings/ListingCards";
 import ProfileDropdown from "@/components/ProfileDropdown";
+import { ListingWithUsername } from "@/types/listing";
 import BrandLabel from "@/components/BrandLabel";
 import listingService from "@/services/listings";
 import { useNavigate } from "react-router-dom";
 import { Input } from "@/components/ui/input";
 import { useState, useEffect } from "react";
-import { Listing } from "@/types/listing";
 import Loader from "@/components/Loader";
 /*
 TODO 
@@ -18,7 +18,7 @@ TODO
 
 const Listings = () => {
   const [isLoading, setIsLoading] = useState(true);
-  const [listings, setListings] = useState<Listing[]>([]);
+  const [listings, setListings] = useState<ListingWithUsername[]>([]);
   const [titleSearch, setTitleSearch] = useState(
     new URLSearchParams(location.search).get("title") || ""
   );
@@ -65,7 +65,7 @@ const Listings = () => {
       {isLoading ? (
         <Loader loadingText="Loading Products..." />
       ) : (
-        <ListingCards listings={listings} />
+        <ListingCards listings={listings} route="/listings" />
       )}
     </div>
   );

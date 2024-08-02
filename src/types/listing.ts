@@ -9,6 +9,8 @@ export type Listing = {
   price: number;
 };
 
+export type ListingWithUsername = Listing & { username: string };
+
 // TODO better naming
 export type ListingNoId = Omit<Listing, "id">;
 

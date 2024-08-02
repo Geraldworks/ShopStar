@@ -1,14 +1,14 @@
 import CreateListing from "../listings/CreateListing";
+import { ListingWithUsername } from "@/types/listing";
 import ListingCards from "../listings/ListingCards";
 import { NonSensitiveUser } from "../../types/auth";
 import listingService from "@/services/listings";
 import authService from "../../services/user";
 import { useEffect, useState } from "react";
-import { Listing } from "@/types/listing";
 
 const Profile = () => {
   const [userInfo, setUserInfo] = useState<NonSensitiveUser>();
-  const [userListings, setUserListings] = useState<Listing[]>([]);
+  const [userListings, setUserListings] = useState<ListingWithUsername[]>([]);
 
   useEffect(() => {
     void (async () => {

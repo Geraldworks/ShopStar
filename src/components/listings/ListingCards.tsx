@@ -1,8 +1,8 @@
-import { Listing } from "@/types/listing";
+import { ListingWithUsername } from "@/types/listing";
 import ListingCard from "./ListingCard";
 
 interface ListingCardsProps {
-  listings: Listing[];
+  listings: ListingWithUsername[];
   route?: string;
 }
 

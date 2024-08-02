@@ -23,6 +23,9 @@ const ProfileDropdown = () => {
         <UserRoundPen />
       </DropdownMenuTrigger>
       <DropdownMenuContent>
+        <Link to="/">
+          <DropdownMenuItem className="hover:cursor-pointer">Home</DropdownMenuItem>
+        </Link>
         <Link to="/listings">
           <DropdownMenuItem className="hover:cursor-pointer">View Listings</DropdownMenuItem>
         </Link>
@@ -31,10 +34,14 @@ const ProfileDropdown = () => {
             <Link to="/profile">
               <DropdownMenuItem className="hover:cursor-pointer">Profile</DropdownMenuItem>
             </Link>
-            <DropdownMenuItem onClick={handleLogout}>Log Out</DropdownMenuItem>
+            <DropdownMenuItem className="hover:cursor-pointer" onClick={handleLogout}>
+              Sign Out
+            </DropdownMenuItem>
           </div>
         ) : (
-          <DropdownMenuItem onClick={handleLogin}>Log In</DropdownMenuItem>
+          <DropdownMenuItem className="hover:cursor-pointer" onClick={handleLogin}>
+            Sign In
+          </DropdownMenuItem>
         )}
       </DropdownMenuContent>
     </DropdownMenu>

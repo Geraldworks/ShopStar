@@ -1,11 +1,11 @@
 import { Card, CardContent } from "@/components/ui/card";
-import { Listing } from "@/types/listing";
+import { ListingWithUsername } from "@/types/listing";
 import { Link } from "react-router-dom";
 
-type ListingCardProps = Listing & { route?: string };
+type ListingCardProps = ListingWithUsername & { route?: string };
 
 const ListingCard = (props: ListingCardProps) => {
-  const { id, title, listingImage, price, createdAt, route = "" } = props;
+  const { id, title, listingImage, price, createdAt, username, route = "" } = props;
 
   return (
     <Link to={`${route}/${id}`}>
@@ -15,6 +15,7 @@ const ListingCard = (props: ListingCardProps) => {
           <p className="text-sm mt-3 mb-1">{title}</p>
           <p className="text-sm">${price}</p>
           <p className="text-sm mt-1">{new Date(createdAt).toDateString()}</p>
+          <p className="text-sm mt-1">{username}</p>
         </CardContent>
       </Card>
     </Link>

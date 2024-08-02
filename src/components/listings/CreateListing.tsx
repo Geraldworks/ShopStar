@@ -7,7 +7,7 @@ import {
   DialogTitle,
   DialogTrigger
 } from "@/components/ui/dialog";
-import { Listing, ListingSchema, TListingSchema } from "@/types/listing";
+import { ListingSchema, ListingWithUsername, TListingSchema } from "@/types/listing";
 import FormFieldWrapper from "../forms/FormFieldWrapper";
 import { zodResolver } from "@hookform/resolvers/zod";
 import useTimedNotif from "../hooks/useTimedNotif";
@@ -20,7 +20,7 @@ import { Form } from "../ui/form";
 import { useState } from "react";
 
 interface CreateListingProps {
-  addListing: (listing: Listing) => void;
+  addListing: (listing: ListingWithUsername) => void;
 }
 
 function CreateListing(props: CreateListingProps) {
