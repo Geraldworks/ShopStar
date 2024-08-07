@@ -2,6 +2,13 @@
 
 Welcome to ShopStar, a robust CRUD (Create, Read, Update, Delete) application designed to streamline the creation and management of product listings. ShopStar allows users to effortlessly create listings and display them to other users within the application.
 
+## Try ShopStar
+
+To try the CRUD functionality of ShopStar, the database is initialized with a dummy user 
+
+**Username**: CelineHether   
+**Password**: CelineHether   
+
 ## Features
 
 - **Create Listings**: Add new product listings with essential details.
