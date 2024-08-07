@@ -1,35 +1,36 @@
-# React + TypeScript + Vite
+# ShopStar
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Welcome to ShopStar, a robust CRUD (Create, Read, Update, Delete) application designed to streamline the creation and management of product listings. ShopStar allows users to effortlessly create listings and display them to other users within the application.
 
-Currently, two official plugins are available:
+## Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- **Create Listings**: Add new product listings with essential details.
+- **View Listings**: Browse and search for product listings created by other users.
+- **Update Listings**: Edit your existing listings to keep information current.
+- **Delete Listings**: Remove listings you no longer wish to display.
 
-## Expanding the ESLint configuration
+## Getting Started
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+To get started with ShopStar, clone the repository and follow the installation instructions. For more details on how to use the application and contribute, please refer to the documentation below.
 
-- Configure the top-level `parserOptions` property like this:
+## Installation Instructions
 
-```js
-export default {
-  // other rules...
-  parserOptions: {
-    ecmaVersion: "latest",
-    sourceType: "module",
-    project: ["./tsconfig.json", "./tsconfig.node.json", "./tsconfig.app.json"],
-    tsconfigRootDir: __dirname
-  }
-};
+Run this chunk to install the required dependencies
+
+```bash
+npm install
 ```
 
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+To get yourself started in the development environment run this chunk
+
+```bash
+npm run dev
+```
+
+## Environment File
+
+A sample environment file has been included in the project titled `sample.env`. It lists a single `VITE_BACKEND_URL` where the react application will interact with for its backend functionality.
 
 ## ShopStar Backend
 
-Checkout the Backend code [here](https://github.com/Geraldworks/ShopStar-Backend)   
-The frontend application was compiled and served as static files on the backend Express application
+The backend code for ShopStar is located in a [separate](https://github.com/Geraldworks/ShopStar-Backend) repository. Follow the instructions in that repository to get started.

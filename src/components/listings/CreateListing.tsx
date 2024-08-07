@@ -63,7 +63,7 @@ function CreateListing(props: CreateListingProps) {
       <DialogContent className="w-1/2">
         <DialogHeader>
           <DialogTitle>Create Listing</DialogTitle>
-          <DialogDescription>Create a new listing here. Click confirm when done.</DialogDescription>
+          <DialogDescription>Create a new listing here. Click submit when done.</DialogDescription>
         </DialogHeader>
         <div className="">
           <Form {...form}>
